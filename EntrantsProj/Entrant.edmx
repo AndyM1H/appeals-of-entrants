@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище EntrantModel" Provider="System.Data.SqlServerCe.4.0" ProviderManifestToken="4.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Entrant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="f_name" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="m_name" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="l_name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="dob" Type="datetime" />
+          <Property Name="address" Type="nvarchar" MaxLength="150" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="parents_info" Type="nvarchar" MaxLength="100" />
+          <Property Name="edu" Type="nvarchar" MaxLength="100" />
+          <Property Name="treatment_method" Type="nvarchar" MaxLength="60" />
+          <Property Name="treatment_date" Type="datetime" />
+          <Property Name="prospective_spec" Type="int" />
+          <Property Name="dis_group" Type="nvarchar" MaxLength="50" />
+          <Property Name="diagnosis" Type="nvarchar" MaxLength="100" />
+          <Property Name="av_ball_cert" Type="real" />
+          <Property Name="notes" Type="nvarchar" MaxLength="120" />
+          <Property Name="yearOfEntry" Type="datetime" />
+          <Property Name="gender" Type="bit" Nullable="false" />
+          <Property Name="poa" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Specialty_Entrant">
+          <End Role="Specialty" Type="Self.Specialty" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Entrant" Type="Self.Entrant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entrant">
+              <PropertyRef Name="prospective_spec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище EntrantModelContainer">
+          <EntitySet Name="Entrant" EntityType="Self.Entrant" store:Type="Tables" />
+          <EntitySet Name="Specialty" EntityType="Self.Specialty" store:Type="Tables" />
+          <AssociationSet Name="FK_Specialty_Entrant" Association="Self.FK_Specialty_Entrant">
+            <End Role="Specialty" EntitySet="Specialty" />
+            <End Role="Entrant" EntitySet="Entrant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EntrantModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Entrant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="f_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="m_name" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="l_name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dob" Type="DateTime" Precision="3" />
+          <Property Name="address" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="parents_info" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="edu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="treatment_method" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="treatment_date" Type="DateTime" Precision="3" />
+          <Property Name="prospective_spec" Type="Int32" />
+          <Property Name="dis_group" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="diagnosis" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="av_ball_cert" Type="Single" />
+          <Property Name="notes" Type="String" MaxLength="120" FixedLength="false" Unicode="true" />
+          <Property Name="yearOfEntry" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Specialty" Relationship="Self.FK_Specialty_Entrant" FromRole="Entrant" ToRole="Specialty" />
+          <Property Name="gender" Type="Boolean" Nullable="false" />
+          <Property Name="poa" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Specialty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Entrant" Relationship="Self.FK_Specialty_Entrant" FromRole="Specialty" ToRole="Entrant" />
+        </EntityType>
+        <Association Name="FK_Specialty_Entrant">
+          <End Role="Specialty" Type="Self.Specialty" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Entrant" Type="Self.Entrant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Specialty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Entrant">
+              <PropertyRef Name="prospective_spec" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entrants" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Entrant" EntityType="Self.Entrant" />
+          <EntitySet Name="Specialty" EntityType="Self.Specialty" />
+          <AssociationSet Name="FK_Specialty_Entrant" Association="Self.FK_Specialty_Entrant">
+            <End Role="Specialty" EntitySet="Specialty" />
+            <End Role="Entrant" EntitySet="Entrant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище EntrantModelContainer" CdmEntityContainer="Entrants">
+          <EntitySetMapping Name="Entrant">
+            <EntityTypeMapping TypeName="EntrantModel.Entrant">
+              <MappingFragment StoreEntitySet="Entrant">
+                <ScalarProperty Name="poa" ColumnName="poa" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="f_name" ColumnName="f_name" />
+                <ScalarProperty Name="m_name" ColumnName="m_name" />
+                <ScalarProperty Name="l_name" ColumnName="l_name" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="parents_info" ColumnName="parents_info" />
+                <ScalarProperty Name="edu" ColumnName="edu" />
+                <ScalarProperty Name="treatment_method" ColumnName="treatment_method" />
+                <ScalarProperty Name="treatment_date" ColumnName="treatment_date" />
+                <ScalarProperty Name="prospective_spec" ColumnName="prospective_spec" />
+                <ScalarProperty Name="dis_group" ColumnName="dis_group" />
+                <ScalarProperty Name="diagnosis" ColumnName="diagnosis" />
+                <ScalarProperty Name="av_ball_cert" ColumnName="av_ball_cert" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="yearOfEntry" ColumnName="yearOfEntry" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Specialty">
+            <EntityTypeMapping TypeName="EntrantModel.Specialty">
+              <MappingFragment StoreEntitySet="Specialty">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
